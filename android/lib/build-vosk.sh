@@ -115,7 +115,8 @@ CXX=$CXX AR=$AR RANLIB=$RANLIB CXXFLAGS="$ARCHFLAGS -O3 -DFST_NO_DYNAMIC_LINKING
     --mathlib=OPENBLAS_CLAPACK --shared \
     --android-incdir=${ANDROID_TOOLCHAIN_PATH}/sysroot/usr/include \
     --host=$HOST --openblas-root=${WORKDIR}/local \
-    --fst-root=${WORKDIR}/local --fst-version=${OPENFST_VERSION}
+    --fst-root=${WORKDIR}/local --fst-version=${OPENFST_VERSION} \
+    LDFLAGS="-Wl,--page-size=16384"
 make -j 8 depend
 cd $WORKDIR/kaldi/src
 make -j 8 online2 rnnlm
@@ -129,7 +130,7 @@ make -j 8 -C ${WORKDIR_BASE}/../../../src \
     OPENFST_ROOT=${WORKDIR}/local \
     OPENBLAS_ROOT=${WORKDIR}/local \
     CXX=$CXX \
-    EXTRA_LDFLAGS="-llog -static-libstdc++ -Wl,-soname,libvosk.so"
+    EXTRA_LDFLAGS="-llog -static-libstdc++ -Wl,--page-size=16384 -soname,libvosk.so"
 cp $WORKDIR/vosk/libvosk.so $WORKDIR/../../src/main/jniLibs/$arch/libvosk.so
 
 done
