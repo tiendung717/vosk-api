@@ -33,11 +33,3 @@ tasks.register('genUUID') {
 }
 
 preBuild.dependsOn(genUUID)
-
-mavenPublishing {
-    coordinates("com.alphacephei", archiveName, version)
-    pom {
-        name = pomName
-        description = pomDescription
-    }
-}
